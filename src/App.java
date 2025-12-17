@@ -1,7 +1,9 @@
 import payment_processor.BankTransfer;
 import payment_processor.CreditCard;
+import payment_processor.PaymentHistory;
 import payment_processor.Paypal;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -16,9 +18,12 @@ public class App {
         CreditCard creditCard = null;
         BankTransfer bankTransfer = null;
         Paypal paypal = null;
+        PaymentHistory paymentHistory = null;
         
         int choice = 0;
         double payment = 0;
+        String discountCode = "";
+        boolean isContinue = true;
         
         do{
             paymentMethod();
@@ -29,38 +34,48 @@ public class App {
                 case 1:
                     System.out.print("Enter payment amount: ");
                     payment = scan.nextDouble();
+                    System.out.println("Enter discount code (if any): ");
+                    discountCode = scan.nextLine();
 
                     creditCard = new CreditCard(payment);
-
-                    creditCard.processPayment(payment);
-                    creditCard.processValidation();
+                
+                    creditCard.displayDetails();
                     break;
 
                 case 2:
                     System.out.print("Enter payment amount: ");
                     payment = scan.nextDouble();
+                    System.out.println("Enter discount code (if any): ");
+                    discountCode = scan.nextLine();
 
                     paypal = new Paypal(payment);
 
-                    paypal.processPayment(payment);
-                    paypal.processValidation();
+                    paypal.displayDetails();
                     break;
 
                 case 3:
                     System.out.print("Enter payment amount: ");
                     payment = scan.nextDouble();
-
+                    System.out.println("Enter discount code (if any): ");
+                    discountCode = scan.nextLine();
 
                     bankTransfer = new BankTransfer(payment);
 
-                    bankTransfer.processPayment(payment);
-                    bankTransfer.processValidation();
+                    bankTransfer.displayDetails();
                     break;
 
                 case 4:
                     scan.close();
                     break;
             }
-        }while(choice != 4);
+
+            System.out.println("Do you want to process another payment? (yes/no): ");
+            String anotherPayment = scan.nextLine();
+            isContinue = anotherPayment.equalsIgnoreCase("Yes");
+
+        }while(isContinue);
+
+        //do number 5 in readme.md 
+
     }
 }

@@ -1,7 +1,9 @@
 package payment_processor;
+import java.util.Random;
 
 public class BankTransfer implements Payment{
-     private double amount;
+    Random random = new Random();
+    private double amount;
 
     public BankTransfer(double amount){
         this.amount = amount;
@@ -24,5 +26,26 @@ public class BankTransfer implements Payment{
         } else {
             System.out.println("Payment Unsuccessful via Bank Transfer.\n");
         }
+    }
+
+    @Override
+    public String generateTransactionID() {
+        String transacID = "";
+    
+        for (int i = 0; i < 2; i++) {
+            transacID += (char) ('A' + random.nextInt(26));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            transacID += random.nextInt(10);
+        }
+         return transacID;
+    }
+    
+    @Override
+    public void displayDetails(){
+        processPayment(amount);
+        System.out.println("Transaction ID: " + generateTransactionID());
+        processValidation();
     }
 }

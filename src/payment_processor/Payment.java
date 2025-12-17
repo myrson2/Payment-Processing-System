@@ -4,4 +4,6 @@ public interface Payment {
     public double processPayment(double amount);
     
     void processValidation();
+    String generateTransactionID();
+    void displayDetails();
 }
