@@ -1,4 +1,6 @@
 package payment_processor;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class BankTransfer implements Payment{
@@ -14,9 +16,13 @@ public class BankTransfer implements Payment{
     }
 
     @Override
+    public String paymentType() {
+        return "Bank Transfer";
+    }
+
+    @Override
     public double processPayment(double amount) {
-        System.out.printf("\nProcessing Credit card payment of Php %.2f....\n", amount);
-        return amount;
+        return this.amount;
     }
 
     @Override
@@ -47,5 +53,15 @@ public class BankTransfer implements Payment{
         processPayment(amount);
         System.out.println("Transaction ID: " + generateTransactionID());
         processValidation();
+    }
+
+    @Override
+    public String dateTime() {
+        LocalDateTime dateTime = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String dateTransac = dateTime.format(formatter);
+        
+        return dateTransac;
     }
 }
